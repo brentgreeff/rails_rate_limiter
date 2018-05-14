@@ -27,6 +27,21 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  cache_servers = %w(redis://127.0.0.1:6379/0)
+
+  config.cache_store = :redis_cache_store, {
+    url: cache_servers,
+    connect_timeout: 30,  # Defaults to 20 seconds
+    read_timeout: 1, # Defaults to 1 second
+    write_timeout: 1, # Defaults to 1 second
+
+    # error_handler: -> (method:, returning:, exception:) {
+    #   # Report errors to Sentry as warnings
+    #   Raven.capture_exception exception, level: 'warning',
+    #     tags: { method: method, returning: returning }
+    # }
+  }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

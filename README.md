@@ -3,14 +3,6 @@
 Challenge - Rate Limiter
 
 ## instruction
-Create a new controller, perhaps called "home", with an index method. This should return only the text string "ok".
-
-## adaptation
-I created a homes_controller (seems more standard).
-It is a singular resource (currently only 1 home).
-the #show action seems more appropriate (its not a list).
-
-## instruction
 The challenge is to implement rate limiting on this route. Limit it such that a requester can only make:
 
 100 requests per hour.
@@ -20,8 +12,43 @@ After the limit has been reached
 
  "Rate limit exceeded. Try again in #{n} seconds".
 
-##  How you do this is up to you.
+## Redis server
 
-Think about how easy your rate limiter will be to maintain and control. Write what you consider to be
+redis://127.0.0.1:6379
 
-When you've finished, send us the link to your repo on github. Good luck!
+Server url is currently hardcoded in config/environments/development.rb
+
+## Run tests
+
+Run `guard`
+
+press [enter]
+
+## Run locally
+
+With httpie
+
+`http GET localhost:3000/`
+
+In bash to make 100 requests
+
+```
+for i in {1..100}
+do
+   http GET localhost:3000/
+done
+```
+
+## Notes
+
+This took a bit longer than expected, because working locally, sometimes my keys would disappear from redis before they were due to expire.
+
+Pretty sure this was caused by using the same redis database for test & dev environments. - Running the tests clears all the keys.
+
+## Further reading
+
+I would like to look into these articles more
+
+https://stripe.com/blog/rate-limiters
+
+https://konghq.com/blog/how-to-design-a-scalable-rate-limiting-algorithm/

@@ -1,6 +1,8 @@
 class HomesController < ApplicationController
 
   def show
-    render plain: 'OK'
+    rate_limit do
+      render plain: 'OK'
+    end
   end
 end

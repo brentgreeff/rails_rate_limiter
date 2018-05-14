@@ -22,6 +22,21 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  cache_servers = %w(redis://127.0.0.1:6379/1)
+
+  config.cache_store = :redis_cache_store, {
+    url: cache_servers,
+    connect_timeout: 30,  # Defaults to 20 seconds
+    read_timeout: 1, # Defaults to 1 second
+    write_timeout: 1, # Defaults to 1 second
+
+    # error_handler: -> (method:, returning:, exception:) {
+    #   # Report errors to Sentry as warnings
+    #   Raven.capture_exception exception, level: 'warning',
+    #     tags: { method: method, returning: returning }
+    # }
+  }
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
